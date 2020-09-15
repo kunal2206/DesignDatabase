@@ -1,0 +1,301 @@
+ScreenManager:
+    CircuitScreen:
+    ProfileScreen:
+    LogScreen:
+
+
+<ProfileScreen>:
+    name:'profile'
+    BoxLayout:
+        size_hint: 0.6, 0.4
+        pos_hint:{'center_x':0.5,'center_y':0.5}
+        orientation:'vertical'
+        MDLabel:
+            text:'Sign Up'
+        MDLabel:
+            id:error
+            text:''
+            theme_text_color:'Error'
+            font_style:'Caption'
+        MDTextField:
+            id:email
+            hint_text:"Email"
+            helper_text:"Enter your email"
+            helper_text_mode:"on_focus"
+        MDTextField:
+            id:passw
+            hint_text:"Password"
+            helper_text:"Enter your password"
+            helper_text_mode:"on_focus"
+            password:True
+        MDTextField:
+            id:copassw
+            hint_text:"Re-enter Password"
+            helper_text:"confirm your password"
+            helper_text_mode:"on_focus"
+            password:True
+        MDRaisedButton:
+            text:'Register'
+            on_release:root.choice()
+        BoxLayout:
+            MDLabel:
+                text:'Already have an account?'
+                font_style:'Caption'
+            MDTextButton:
+                text:'Log In'
+                on_press:root.manager.transition.duration =0
+                on_release:root.manager.current = 'log'
+
+
+<LogScreen>:
+    name:'log'
+    BoxLayout:
+        size_hint: 0.6, 0.4
+        pos_hint:{'center_x':0.5,'center_y':0.5}
+        orientation:'vertical'
+        MDLabel:
+            text:'Sign In'
+        MDLabel:
+            id:check
+            text:''
+            theme_text_color:'Error'
+            font_style:'Caption'
+        MDTextField:
+            id:mail
+            hint_text:"Email"
+            helper_text:"Enter your email"
+            helper_text_mode:"on_focus"
+        MDTextField:
+            id:passwor
+            hint_text:"Password"
+            helper_text:"Enter your password"
+            helper_text_mode:"on_focus"
+            password:True
+        MDRaisedButton:
+            text:'Log In'
+            on_release:
+                root.available()
+        BoxLayout:
+            MDLabel:
+                text:"Don't have an account"
+                font_style:'Caption'
+            MDTextButton:
+                text:'Sign'
+                on_press:root.manager.transition.duration =0
+                on_release:root.manager.current ='profile'
+
+
+<CircuitScreen>:
+    name:'circuit'
+    id:cir
+    NavigationLayout:
+        ScreenManager:
+            id:new_screen
+            HomeScreen:
+            NotificationsScreen:
+            SettingsScreen:
+            WatchlistScreen:
+            FavScreen:
+        MDNavigationDrawer:
+            id:nav_d
+            BoxLayout:
+                orientation:'vertical'
+                BoxLayout:
+                    size_hint:1,0.2
+                    id:kl
+                    MDIconButton:
+                        icon:'account'
+                        size_hint:0.36,1
+                        on_press:
+                            root.manager.current='log'
+                            root.ids.nav_d.toggle_nav_drawer()
+                            root.manager.transition.duration =0
+                    MDLabel:
+                        id:change
+                        size_hint:1,1
+                        pos_hint:{'x':0,'center_y':0.5}
+                        text:''
+                ScrollView:
+                    MDList:
+                        OneLineIconListItem:
+                            text:'Home'
+                            IconLeftWidget:
+                                icon:'home'
+                        OneLineIconListItem:
+                            text:'Notifications'
+                            IconLeftWidget:
+                                icon:'notification-clear-all'
+                        OneLineIconListItem:
+                            text:'Watch List'
+                            IconLeftWidget:
+                                icon:'bookmark'
+                        OneLineIconListItem:
+                            text:'Favorite Services'
+                            IconLeftWidget:
+                                icon:'heart'
+                        OneLineIconListItem:
+                            text:'Help and Support'
+                            IconLeftWidget:
+                                icon:'home'
+                        OneLineIconListItem:
+                            text:'Settings'
+                            IconLeftWidget:
+                                icon:'settings'
+                        OneLineIconListItem:
+                            text:'Login'
+                            on_release:
+                                root.ids.nav_d.toggle_nav_drawer()
+                                root.manager.current = 'log'
+                            IconLeftWidget:
+                                icon:'login'
+
+<HomeScreen>:
+    name:'Home'
+    MDLabel:
+        text:'Explore the services offered by us'
+        pos_hint:{'center_x':0.5,'center_y':0.7}
+        halign:'center'
+    BoxLayout:
+        orientation:'vertical'
+        spacing:20
+        MDToolbar:
+            title:'Rexeon Solutions'
+            left_action_items:[['menu', lambda x: root.parent.parent.parent.ids.nav_d.toggle_nav_drawer()]]
+            right_action_items:[['shopping', lambda x: root.parent.parent.parent.ids.nav_d.toggle_nav_drawer()]]
+            elevation:8
+        Widget:
+        MDCard:
+            elevation:8
+            size_hint:0.6,0.9
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+            MDLabel:
+                text:'Testing Services'
+                halign:'center'
+                pos_hint:{'center_x':0.5,'center_y':0.5}
+
+        MDCard:
+            elevation:8
+            size_hint:0.6,0.9
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+            MDLabel:
+                text:'Consultancy Services'
+                halign:'center'
+                pos_hint:{'center_x':0.5,'center_y':0.5}
+
+        MDBottomAppBar:
+            MDToolbar:
+                icon:'home'
+                left_action_items:[['settings', lambda x: root.manager.parent.parent.SettingsCallback()],['heart', lambda x: root.manager.parent.parent.FavCallback()]]
+                right_action_items:[['bookmark', lambda x: root.manager.parent.parent.WatchlistCallback()],['notification-clear-all', lambda x: root.manager.parent.parent.NotificationsCallback()]]
+                on_action_button:root.manager.current = 'Home'
+
+<SettingsScreen>:
+    name:'Settings'
+    MDCard:
+        size_hint:0.8,0.6
+        pos_hint:{'center_x':0.5,'center_y':0.5}
+        BoxLayout:
+            orientation:'vertical'
+            BoxLayout:
+                orientation:'horizontal'
+                MDLabel:
+                    text:'name'
+                    halign:'center'
+                MDLabel:
+                    text:'yet to be added'
+            BoxLayout:
+                orientation:'horizontal'
+                MDLabel:
+                    text:'email'
+                    halign:'center'
+                MDLabel:
+                    text:'yet to be added'
+            BoxLayout:
+                orientation:'horizontal'
+                MDLabel:
+                    text:'phone'
+                    halign:'center'
+                MDLabel:
+                    text:'yet to be added'
+            BoxLayout:
+                orientation:'horizontal'
+                MDLabel:
+                    text:'address'
+                    halign:'center'
+                MDLabel:
+                    text:'yet to be added'
+
+    BoxLayout:
+        orientation:'vertical'
+        MDToolbar:
+            title:'Rexeon Solutions'
+            left_action_items:[['menu', lambda x: root.parent.parent.parent.ids.nav_d.toggle_nav_drawer()]]
+            right_action_items:[['shopping', lambda x: root.parent.parent.parent.ids.nav_d.toggle_nav_drawer()]]
+            elevation:8
+        Widget:
+        MDBottomAppBar:
+            MDToolbar:
+                icon:'home'
+                left_action_items:[['settings', lambda x: root.manager.parent.parent.SettingsCallback()],['heart', lambda x: root.manager.parent.parent.FavCallback()]]
+                right_action_items:[['bookmark', lambda x: root.manager.parent.parent.WatchlistCallback()],['notification-clear-all', lambda x: root.manager.parent.parent.NotificationsCallback()]]
+                on_action_button:root.manager.current = 'Home'
+
+<FavScreen>:
+    name:'Fav'
+    BoxLayout:
+        orientation:'vertical'
+        MDToolbar:
+            title:'Rexeon Solutions'
+            left_action_items:[['menu', lambda x: root.parent.parent.parent.ids.nav_d.toggle_nav_drawer()]]
+            right_action_items:[['shopping', lambda x: root.parent.parent.parent.ids.nav_d.toggle_nav_drawer()]]
+            elevation:8
+        Widget:
+        BoxLayout:
+            MDLabel:
+                text:'Fav'
+        MDBottomAppBar:
+            MDToolbar:
+                icon:'home'
+                left_action_items:[['settings', lambda x: root.manager.parent.parent.SettingsCallback()],['heart', lambda x: root.manager.parent.parent.FavCallback()]]
+                right_action_items:[['bookmark', lambda x: root.manager.parent.parent.WatchlistCallback()],['notification-clear-all', lambda x: root.manager.parent.parent.NotificationsCallback()]]
+                on_action_button:root.manager.current = 'Home'
+
+<NotificationsScreen>:
+    name:'Notifications'
+    BoxLayout:
+        orientation:'vertical'
+        MDToolbar:
+            title:'Rexeon Solutions'
+            left_action_items:[['menu', lambda x: root.parent.parent.parent.ids.nav_d.toggle_nav_drawer()]]
+            right_action_items:[['shopping', lambda x: root.parent.parent.parent.ids.nav_d.toggle_nav_drawer()]]
+            elevation:8
+        Widget:
+        BoxLayout:
+            MDLabel:
+                text:'Notifications'
+        MDBottomAppBar:
+            MDToolbar:
+                icon:'home'
+                left_action_items:[['settings', lambda x: root.manager.parent.parent.SettingsCallback()],['heart', lambda x: root.manager.parent.parent.FavCallback()]]
+                right_action_items:[['bookmark', lambda x: root.manager.parent.parent.WatchlistCallback()],['notification-clear-all', lambda x: root.manager.parent.parent.NotificationsCallback()]]
+                on_action_button:root.manager.current = 'Home'
+
+<WatchlistScreen>:
+    name:'Watchlist'
+    BoxLayout:
+        orientation:'vertical'
+        MDToolbar:
+            title:'Rexeon Solutions'
+            left_action_items:[['menu', lambda x: root.parent.parent.parent.ids.nav_d.toggle_nav_drawer()]]
+            right_action_items:[['shopping', lambda x: root.parent.parent.parent.ids.nav_d.toggle_nav_drawer()]]
+            elevation:8
+        Widget:
+        BoxLayout:
+            MDLabel:
+                text:'Watchlist'
+        MDBottomAppBar:
+            MDToolbar:
+                icon:'home'
+                left_action_items:[['settings', lambda x: root.manager.parent.parent.SettingsCallback()],['heart', lambda x: root.manager.parent.parent.FavCallback()]]
+                right_action_items:[['bookmark', lambda x: root.manager.parent.parent.WatchlistCallback()],['notification-clear-all', lambda x: root.manager.parent.parent.NotificationsCallback()]]
+                on_action_button:root.manager.current = 'Home'
